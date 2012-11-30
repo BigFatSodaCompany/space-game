@@ -2,6 +2,10 @@
 /*
  * Space Game (it's a working title)
  *  Copyright (C) 2012 Big Fat Soda Company
+ *
+ * SpaceGame.cs - Main entry point and Game subclass.
+ * Here we initialise all the essential subsystems, and delegate all the hard
+ * work to the GameManager component.
  */
 #endregion
 
@@ -40,12 +44,23 @@ namespace SpaceGame
             _gdm = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
+            // Initialise Gamer services
             _gsc = new GamerServicesComponent(this);
             this.Components.Add(_gsc);
 
-            _gm = new GameManager(this);
+            // Initialise the filemanager and load graphics config
             _fm = new FileManager(this);
+            _fm.LoadConfig();
             this.Components.Add(_fm);
+
+            _gm = new GameManager(this);
+
+            _gdm.PreferredBackBufferWidth = _fm.Config.ScreenWidth;
+            _gdm.PreferredBackBufferHeight = _fm.Config.ScreenHeight;
+            _gdm.PreferMultiSampling = _fm.Config.antialiasing;
+            _gdm.IsFullScreen = _fm.Config.fullscreen;
+            _gdm.SynchronizeWithVerticalRetrace = _fm.Config.vsync;
+            IsFixedTimeStep = _fm.Config.vsync;
         }
 
         protected override void Initialize()
@@ -58,7 +73,7 @@ namespace SpaceGame
 
         protected override void EndRun()
         {
-            _fm.SaveOptions();
+            _fm.SaveConfig();
             base.EndRun();
         }
         #endregion
