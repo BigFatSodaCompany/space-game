@@ -17,7 +17,7 @@ namespace SpaceGame.InputComponents
     /// Describes a sequences of buttons which must be pressed to active the move.
     /// A real game might add a virtual PerformMove() method to this class.
     /// </summary>
-    class Move
+    public class Move
     {
         #region Fields & properties
         public string Name;

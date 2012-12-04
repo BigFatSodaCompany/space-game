@@ -16,7 +16,7 @@ using SpaceGame.Managers;
 
 namespace SpaceGame.InputComponents
 {
-    class MoveList
+    public class MoveList
     {
         #region Fields & properties
         // The internal array of moves

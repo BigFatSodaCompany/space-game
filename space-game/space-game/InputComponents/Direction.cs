@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace SpaceGame.InputComponents
 {
-    static class Direction
+    static public class Direction
     {
         #region Fields
         // Helper bit masks for directions defined with the Buttons flags enum.
