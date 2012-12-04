@@ -63,7 +63,7 @@ namespace SpaceGame.Managers
             : base(game)
         {
             this.Enabled = false;
-            containerName = GameOptions.GameName;
+            containerName = SystemConfig.GameName;
         }
 
         public override void Initialize()
