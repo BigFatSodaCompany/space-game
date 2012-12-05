@@ -21,7 +21,7 @@ namespace SpaceGame.Managers
     /// <summary>
     /// Holds the state of the input devices for all players
     /// </summary>
-    class InputState
+    private class InputState
     {
         #region Fields & properties
         public GamePadState[] GamePadState { get; private set; }
@@ -203,7 +203,7 @@ namespace SpaceGame.Managers
     {
         #region Fields & properties
         // The Game pad and keyboard states
-        public InputState InputState { get; private set; }
+        private InputState InputState { get; set; }
         #endregion
 
         #region Initialisation
@@ -214,9 +214,13 @@ namespace SpaceGame.Managers
         #endregion
 
         #region Update
-        public void Update(GameTime gameTime)
+        public void GetInput()
         {
             InputState.GetInput();
+        }
+
+        public void Update(GameTime gameTime)
+        {
             InputState.ExpireInput(gameTime);
             InputState.UpdateBuffer(gameTime);
         }
