@@ -66,9 +66,6 @@ namespace SpaceGame
         protected override void Initialize()
         {
             base.Initialize();
-#if WINDOWS
-            Guide.ShowSignIn(1, false);
-#endif
         }
 
         protected override void EndRun()
