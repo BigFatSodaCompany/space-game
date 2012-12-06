@@ -35,13 +35,13 @@ namespace SpaceGame.InputComponents
         /// <summary>
         /// Finds the longest Move which matches the given input, if any.
         /// </summary>
-        public Move DetectMove(InputManager input)
+        public Move DetectMove(int player, InputManager input)
         {
             // Perform a linear search for a move which matches the input. This relies
             // on the moves array being in order of decreasing sequence length.
             foreach (Move move in moves)
             {
-                if (input.Matches(move))
+                if (input.Matches(player, move))
                 {
                     return move;
                 }
