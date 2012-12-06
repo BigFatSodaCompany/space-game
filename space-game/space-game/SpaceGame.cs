@@ -35,6 +35,7 @@ namespace SpaceGame
         private GamerServicesComponent _gsc = null;
         private FileManager _fm = null;
         private GameManager _gm = null;
+        private ScreenManager _sm = null;
         #endregion
 
         #region Initialisation
@@ -79,6 +80,7 @@ namespace SpaceGame
         protected override void LoadContent()
         {
             // Content managers load here
+            _sm = new ScreenManager(this, _gm);
         }
 
         protected override void UnloadContent()
@@ -93,6 +95,7 @@ namespace SpaceGame
             float ElapsedTimeFloat =
                     (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+            _sm.ProcessInput(ElapsedTimeFloat);
             base.Update(gameTime);
         }
 
@@ -100,6 +103,26 @@ namespace SpaceGame
         {
             _gdm.GraphicsDevice.Clear(Color.Black);
             base.Draw(gameTime);
+        }
+
+        public void ToggleFullScreen()
+        {
+            if (!_gdm.IsFullScreen)
+            {
+                _gdm.PreferredBackBufferWidth = 3840;
+                _gdm.PreferredBackBufferHeight = 2160;
+                _gdm.IsFullScreen = true;
+                _fm.Config.fullscreen = true;
+            }
+            else
+            {
+                _gdm.PreferredBackBufferWidth = _fm.Config.ScreenWidth;
+                _gdm.PreferredBackBufferHeight = _fm.Config.ScreenHeight;
+                _gdm.IsFullScreen = false;
+                _fm.Config.fullscreen = false;
+            }
+
+            _gdm.ApplyChanges();
         }
         #endregion
 
