@@ -20,12 +20,7 @@ namespace SpaceGame
     {
         // The game name
         public const string GameName = "SpaceGame";
-
-        private int _maxPlayers = 1;
-        public int MaxPlayers()
-        {
-            return _maxPlayers;
-        }
+        public const int MaxPlayers = 1;
 
         // Have any of our options changed?
         private bool _changed = false;
