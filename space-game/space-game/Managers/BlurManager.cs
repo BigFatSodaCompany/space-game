@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
 
-namespace ShipGame
+namespace SpaceGame.Managers
 {
     // supported render techniques
     public enum BlurTechnique
