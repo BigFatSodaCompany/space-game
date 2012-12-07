@@ -35,7 +35,6 @@ namespace SpaceGame
         private GamerServicesComponent _gsc = null;
         private FileManager _fm = null;
         private GameManager _gm = null;
-        private ScreenManager _sm = null;
         #endregion
 
         #region Initialisation
@@ -80,7 +79,6 @@ namespace SpaceGame
         protected override void LoadContent()
         {
             // Content managers load here
-            _sm = new ScreenManager(this, _gm);
         }
 
         protected override void UnloadContent()
@@ -95,7 +93,6 @@ namespace SpaceGame
             float ElapsedTimeFloat =
                     (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            _sm.ProcessInput(ElapsedTimeFloat);
             base.Update(gameTime);
         }
 
