@@ -110,6 +110,7 @@
     <Compile Include="InputComponents\Direction.cs" />
     <Compile Include="InputComponents\Move.cs" />
     <Compile Include="InputComponents\MoveList.cs" />
+    <Compile Include="Managers\BlurManager.cs" />
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="SystemConfig.cs" />
     <Compile Include="GameOptions.cs" />
