@@ -22,7 +22,7 @@ using Microsoft.Xna.Framework;
 
 namespace SpaceGame.Managers
 {
-    class FontManager : IDisposable
+    public class FontManager : IDisposable
     {
         #region Fields & properties
         private GraphicsDevice _gd = null;
