@@ -36,6 +36,7 @@ namespace SpaceGame
         private FileManager _fm = null;
         private GameManager _gm = null;
         private FontManager _font = null;
+        private ScreenManager _sm = null;
         #endregion
 
         #region Initialisation
@@ -81,15 +82,19 @@ namespace SpaceGame
         {
             // Content managers load here
             _font = new FontManager(_gdm.GraphicsDevice);
+            _sm = new ScreenManager(this, _font, _gm);
 
             _font.LoadContent(Content);
+            _sm.LoadContent(_gdm.GraphicsDevice, Content);
         }
 
         protected override void UnloadContent()
         {
             // Content managers unload here
+            _sm.UnloadContent();
             _font.UnloadContent();
 
+            _sm = null;
             _font = null;
         }
         #endregion
@@ -100,12 +105,16 @@ namespace SpaceGame
             float ElapsedTimeFloat =
                     (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+            _sm.ProcessInput(ElapsedTimeFloat);
+            _sm.Update(ElapsedTimeFloat);
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             _gdm.GraphicsDevice.Clear(Color.Black);
+            _sm.Draw(_gdm.GraphicsDevice);
             base.Draw(gameTime);
         }
 
