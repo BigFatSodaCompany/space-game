@@ -35,6 +35,7 @@ namespace SpaceGame
         private GamerServicesComponent _gsc = null;
         private FileManager _fm = null;
         private GameManager _gm = null;
+        private FontManager _font = null;
         #endregion
 
         #region Initialisation
@@ -79,6 +80,9 @@ namespace SpaceGame
         protected override void LoadContent()
         {
             // Content managers load here
+            _font = new FontManager(_gdm.GraphicsDevice);
+
+            _font.LoadContent(Content);
         }
 
         protected override void UnloadContent()
