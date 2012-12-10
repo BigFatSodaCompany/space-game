@@ -36,6 +36,6 @@ namespace SpaceGame
         public abstract void Draw3D(GraphicsDevice gd);
 
         // called to draw the 2D info text and hud
-        // public abstract void Draw2D(GraphicsDevice gd, FontManager font);
+        public abstract void Draw2D(GraphicsDevice gd, FontManager font);
     }
 }
