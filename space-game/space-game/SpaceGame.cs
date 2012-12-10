@@ -88,6 +88,9 @@ namespace SpaceGame
         protected override void UnloadContent()
         {
             // Content managers unload here
+            _font.UnloadContent();
+
+            _font = null;
         }
         #endregion
 
