@@ -21,9 +21,6 @@ namespace SpaceGame.Managers
     {
         Color = 0,              // plain color
         ColorTexture,           // plain texture mapping
-        BlurHorizontal,         // horizontal blur
-        BlurVertical,           // vertical blur
-        BlurHorizontalSplit,    // horizontal split screen blur
     }
 
     public class BlurManager : IDisposable
