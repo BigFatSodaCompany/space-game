@@ -114,7 +114,7 @@
     <Compile Include="Managers\FontManager.cs" />
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\ScreenManager.cs" />
-    <Compile Include="Screen.cs" />
+    <Compile Include="Screens\Screen.cs" />
     <Compile Include="SystemConfig.cs" />
     <Compile Include="GameOptions.cs" />
     <Compile Include="Managers\FileManager.cs" />
