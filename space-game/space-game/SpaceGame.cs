@@ -10,8 +10,6 @@
 #endregion
 
 #region Imports
-using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.GamerServices;
 using SpaceGame.Managers;
@@ -113,7 +111,6 @@ namespace SpaceGame
 
         protected override void Draw(GameTime gameTime)
         {
-            _gdm.GraphicsDevice.Clear(Color.Black);
             _sm.Draw(_gdm.GraphicsDevice);
             base.Draw(gameTime);
         }

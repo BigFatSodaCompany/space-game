@@ -8,10 +8,7 @@
  */
 #endregion
 
-#region Imports
-using System;
 using Microsoft.Xna.Framework.GamerServices;
-#endregion
 
 namespace SpaceGame
 {
