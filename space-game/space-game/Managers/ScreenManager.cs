@@ -17,6 +17,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SpaceGame.Screens;
 #endregion
 
 namespace SpaceGame.Managers
@@ -75,10 +76,12 @@ namespace SpaceGame.Managers
             _im = new InputManager(SystemConfig.MaxPlayers, 1);
 
             // Add Screens here
+            _screens.Add(new Demo(this, game));
 
             // Fade to intro screen
-            // SetNextScreen(ScreenType.ScreenIntro, GameOptions.FadeColor,
-            //      GameOptions.FadeTime);
+            SetNextScreen(ScreenType.ScreenIntro, SystemConfig.fadeColour,
+                    SystemConfig.fadeTime);
+
             fade = fadeTime * 0.5f;
         }
         #endregion
@@ -243,8 +246,16 @@ namespace SpaceGame.Managers
             int height = gd.Viewport.Height;
 
             // create render target
-            colourRT = new RenderTarget2D(gd, width, height, true,
-                    SurfaceFormat.Color, DepthFormat.Depth24);
+            try
+            {
+                colourRT = new RenderTarget2D(gd, width, height, true,
+                        SurfaceFormat.Color, DepthFormat.Depth24);
+            }
+            catch (NotSupportedException)
+            {
+                colourRT = new RenderTarget2D(gd, width, height, false,
+                        SurfaceFormat.Color, DepthFormat.Depth24);
+            }
         }
 
         public void UnloadContent()
@@ -301,6 +312,10 @@ namespace SpaceGame.Managers
 
         #region Screen retrieval properties
         // Each type of screen that is used will be accessed from here.
+        public Demo ScreenIntro
+        {
+            get { return (Demo)_screens[(int)ScreenType.ScreenIntro]; }
+        }
         #endregion
         #endregion
 

@@ -10,6 +10,8 @@
  */
 #endregion
 
+using Microsoft.Xna.Framework;
+
 namespace SpaceGame
 {
     /// <summary>
@@ -17,9 +19,13 @@ namespace SpaceGame
     /// </summary>
     public class SystemConfig
     {
+        #region Constants & statics
         // The game name
         public const string GameName = "SpaceGame";
         public const int MaxPlayers = 1;
+        public const float fadeTime = 1.0f;
+        public static Vector4 fadeColour = Vector4.Zero;
+        #endregion
 
         // Have any of our options changed?
         private bool _changed = false;
