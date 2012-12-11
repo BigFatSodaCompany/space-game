@@ -9,7 +9,6 @@
  * which case this class isn't serialised nor deserialised.
  */
 #endregion
-using System;
 
 namespace SpaceGame
 {
