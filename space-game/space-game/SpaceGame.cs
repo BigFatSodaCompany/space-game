@@ -111,7 +111,6 @@ namespace SpaceGame
 
         protected override void Draw(GameTime gameTime)
         {
-            _gdm.GraphicsDevice.Clear(Color.Black);
             _sm.Draw(_gdm.GraphicsDevice);
             base.Draw(gameTime);
         }
