@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010 Express for Windows Phone
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "space-game", "space-game\space-game\space-game.csproj", "{4C31A5AA-B7D1-427F-87D7-E611442A2762}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "space-game-content", "space-game\space-game-content\space-game-content.contentproj", "{ED061B6C-9A66-4978-AEB1-860C1C45BDCF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4C31A5AA-B7D1-427F-87D7-E611442A2762}.Debug|x86.ActiveCfg = Debug|x86
+		{4C31A5AA-B7D1-427F-87D7-E611442A2762}.Debug|x86.Build.0 = Debug|x86
+		{4C31A5AA-B7D1-427F-87D7-E611442A2762}.Release|x86.ActiveCfg = Release|x86
+		{4C31A5AA-B7D1-427F-87D7-E611442A2762}.Release|x86.Build.0 = Release|x86
+		{ED061B6C-9A66-4978-AEB1-860C1C45BDCF}.Debug|x86.ActiveCfg = Debug|x86
+		{ED061B6C-9A66-4978-AEB1-860C1C45BDCF}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
