@@ -9,6 +9,7 @@
 #endregion
 
 #region Imports
+using System;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceGame.Managers;
@@ -19,10 +20,39 @@ namespace SpaceGame
     public enum ScreenType
     {
         ScreenIntro = 0,
+        ScreenDemo,
     };
 
     public abstract class Screen
     {
+        // The time to take to fade in to this screen
+        private float _fadeIn = 0.5f;
+        public float FadeIn
+        {
+            get
+            {
+                return _fadeIn;
+            }
+            protected set
+            {
+                _fadeIn = Math.Abs(value);
+            }
+        }
+
+        // The time to take to fade out from this screen
+        private float _fadeOut = 0.5f;
+        public float FadeOut
+        {
+            get
+            {
+                return _fadeOut;
+            }
+            protected set
+            {
+                _fadeOut = Math.Abs(value);
+            }
+        }
+
         // called when screen gets or looses focus
         public abstract void SetFocus(ContentManager content, bool focus);
 
