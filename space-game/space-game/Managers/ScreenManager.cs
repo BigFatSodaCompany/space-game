@@ -24,6 +24,13 @@ namespace SpaceGame.Managers
 {
     public class ScreenManager : IDisposable
     {
+        enum TransitionType
+        {
+            TransitionDone = 0,
+            FadeIn,
+            FadeOut,
+        };
+
         #region Fields & properties
         private SpaceGame _sg = null;
         private GameManager _gm = null;
@@ -39,8 +46,12 @@ namespace SpaceGame.Managers
         private Screen _current = null;
         private Screen _next = null;
 
-        // Total fade time when in a transition
-        private float fadeTime = 1.0f;
+        // Transition type
+        private TransitionType transitionType = TransitionType.TransitionDone;
+
+        // Fade in/out time
+        private float fadeInTime = 0.0f;
+        private float fadeOutTime = 0.0f;
 
         // Current fade time when in a transition
         private float fade = 0.0f;
@@ -60,7 +71,7 @@ namespace SpaceGame.Managers
         // Background texture used on menus
         private Texture2D textureBackground;
 
-        // Time for background animation used on menus
+        // Time for background animation used 7on menus
         private float backgroundTime = 0.0f;
         #endregion
 
@@ -76,13 +87,12 @@ namespace SpaceGame.Managers
             _im = new InputManager(SystemConfig.MaxPlayers, 1);
 
             // Add Screens here
+            _screens.Add(new Intro(this, game));
             _screens.Add(new Demo(this, game));
 
             // Fade to intro screen
             SetNextScreen(ScreenType.ScreenIntro, SystemConfig.fadeColour,
                     SystemConfig.fadeTime);
-
-            fade = fadeTime * 0.5f;
         }
         #endregion
 
@@ -98,23 +108,22 @@ namespace SpaceGame.Managers
             {
                 if (_im.IsKeyPressed(i, Keys.F5))
                     _sg.ToggleFullScreen();
-                if (_im.IsKeyPressed(i, Keys.F1))
+                else if (_im.IsKeyPressed(i, Keys.F1))
                     _fps = !_fps;
             }
         }
 
         public void Update(float elapsedTime)
         {
-            // if we're transitioning
-            if (fade > 0)
+            // Fading out
+            if (transitionType == TransitionType.FadeOut)
             {
-                // update transition time
                 fade -= elapsedTime;
 
-                // if fadeout has finished
-                if (_next != null && fade < 0.5f * fadeTime)
+                // Have we finished that fade?
+                if (_next != null && fade < 0)
                 {
-                    // Tell the next screen that it's 
+                    // Tell the next screen that it's gained focus
                     _next.SetFocus(_cm, true);
 
                     // tell the old screen it lost focus
@@ -124,6 +133,19 @@ namespace SpaceGame.Managers
                     // set next screen as current
                     _current = _next;
                     _next = null;
+
+                    // begin the fadein
+                    transitionType = TransitionType.FadeIn;
+                    fade = fadeInTime;
+                }
+            }
+            else if (transitionType == TransitionType.FadeIn)
+            {
+                fade -= elapsedTime;
+                if (fade < 0)
+                {
+                    transitionType = TransitionType.TransitionDone;
+                    fade = 0;
                 }
             }
 
@@ -193,29 +215,22 @@ namespace SpaceGame.Managers
                 // Draw the 3D scene texture
                 DrawRenderTargetTexture(gd, colourRT, 1.0f, false);
 
-                // Begin text mode
-                _fm.BeginText();
-
                 // Draw 2D Scene
                 _current.Draw2D(gd, _fm);
 
-                // Draw FPS
-                if (_fps)
-                {
-                    _fm.DrawText("Arial", "FPS: " + frameRate,
-                            new Vector2(gd.Viewport.Width - 80, 0),
-                            Color.White);
-                }
-
-                // end text mode
-                _fm.EndText();
             }
 
-            if (fade > 0)
+            if (transitionType != TransitionType.TransitionDone)
             {
                 // Compute transition fade intensity
-                float size = fadeTime * 0.5f;
-                fadeColour.W = 1.25f * (1.0f - Math.Abs(fade - size) / size);
+                float step;
+
+                if (transitionType == TransitionType.FadeOut)
+                    step = (fadeOutTime - fade) / fadeOutTime;
+                else
+                    step = 1.0f - ((fadeInTime - fade) / fadeInTime);
+
+                fadeColour.W = 1.25f * step;
 
                 // Set alph blend and no depth test or write
                 gd.DepthStencilState = DepthStencilState.None;
@@ -225,6 +240,20 @@ namespace SpaceGame.Managers
                 _bm.RenderScreenQuad(gd, BlurTechnique.Color, null,
                         fadeColour);
             }
+
+            // Begin text mode
+            _fm.BeginText();
+
+            // Draw FPS
+            if (_fps)
+            {
+                _fm.DrawText("Arial", "FPS: " + frameRate,
+                        new Vector2(gd.Viewport.Width - 80, 0),
+                        Color.White);
+            }
+
+            // end text mode
+            _fm.EndText();
         }
         #endregion
 
@@ -282,9 +311,23 @@ namespace SpaceGame.Managers
             if (_next == null)
             {
                 _next = _screens[(int)st];
-                fadeTime = time;
+
+                fadeInTime = _next.FadeIn;
+                if (_current != null)
+                    fadeOutTime = _current.FadeOut;
+                else
+                    fadeOutTime = 0.5f;
+
+                if ((fadeInTime + fadeOutTime) > 0)
+                {
+                    float sum = time / (fadeInTime + fadeOutTime);
+                    fadeInTime *= sum;
+                    fadeOutTime *= sum;
+                }
+
                 fadeColour = colour;
-                fade = fadeTime;
+                fade = fadeOutTime;
+                transitionType = TransitionType.FadeOut;
                 return true;
             }
             return false;

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using SpaceGame.Managers;
+using Microsoft.Xna.Framework.Input;
 
 namespace SpaceGame.Screens
 {
@@ -17,6 +18,9 @@ namespace SpaceGame.Screens
         {
             _sm = sm;
             _gm = gm;
+
+            FadeIn = 0.0f;
+            FadeOut = 3.0f;
         }
 
         public override void SetFocus(ContentManager content, bool focus)
@@ -25,6 +29,11 @@ namespace SpaceGame.Screens
 
         public override void ProcessInput(float elapsedTime, InputManager input)
         {
+            for (int i = 0; i < SystemConfig.MaxPlayers; i++)
+            {
+                if (input.IsKeyPressed(i, Keys.Escape))
+                    _sm.SetNextScreen(ScreenType.ScreenIntro);
+            }
         }
 
         public override void Update(float elapsedTime)
@@ -36,7 +45,7 @@ namespace SpaceGame.Screens
             if (gd == null)
                 throw new ArgumentNullException("gd");
 
-            gd.Clear(Color.Black);
+            gd.Clear(Color.SlateBlue);
         }
 
         public override void Draw2D(GraphicsDevice gd, FontManager font)
